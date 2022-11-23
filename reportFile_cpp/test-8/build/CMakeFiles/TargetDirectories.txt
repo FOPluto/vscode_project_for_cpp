@@ -1,0 +1,3 @@
+C:/Users/HUAWEI/Desktop/reportFile/test-8/build/CMakeFiles/demo.dir
+C:/Users/HUAWEI/Desktop/reportFile/test-8/build/CMakeFiles/edit_cache.dir
+C:/Users/HUAWEI/Desktop/reportFile/test-8/build/CMakeFiles/rebuild_cache.dir
