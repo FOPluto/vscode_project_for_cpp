@@ -1,0 +1,3 @@
+D:/VScodeProject/importantProject/build/CMakeFiles/my_cmake_exe.dir
+D:/VScodeProject/importantProject/build/CMakeFiles/ALL_BUILD.dir
+D:/VScodeProject/importantProject/build/CMakeFiles/ZERO_CHECK.dir
