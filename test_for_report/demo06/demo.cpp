@@ -12,6 +12,32 @@ const int N = 100010;
 int n;
 
 struct treeNode{
+int v;
+int l, r;
+};
+
+bool st[N];
+
+vector<treeNode> t;
+
+int main(){
+scanf("%d", &n);
+
+for(int i = 0;i < n;i++) {
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+const int N = 100010;
+
+int n;
+
+struct treeNode{
     int v;
     int l, r;
 };

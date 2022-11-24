@@ -1,135 +1,61 @@
 #include <cstdio>
-#include <cstring>
 #include <algorithm>
 #include <iostream>
-#include <stack>
-
-#define ERROR 0x3f3f3f3f
+#include <vector>
+#include <cstring>
 
 using namespace std;
 
-int add(int num1, int num2){
-	return num1 + num2;
-}
+const int N = 100010;  // N可以用于创建数组
 
-int mul(int num1, int num2){
-	return num1 - num2;
-}
-
-int muti(int num1, int num2){
-	return num1 * num2;
-}
-
-int dev(int num1, int num2){
-	return num1 / num2;
-}
-
-int do_compute(int num1, int num2, char cac){
-	switch(cac){
-		case '+':
-			return add(num1, num2); 
-		case '-':
-			return mul(num1, num2);
-		case '*':
-			return muti(num1, num2);
-		case '/':
-			if(num2 != 0)
-				return dev(num1, num2);
-			else
-				return ERROR;
-	}
-}
-
-//struct chainNode{
-//	int value;
-//	chainNode* next;
-//	chainNode(int value, chainNode* next){
-//		this->value = value;
-//		this->next = next;
-//	}
-//};
-//
-//class stack{
-//	private:
-//	chainNode* stack_top;
-//	int size;
-//	
-//	public:
-//	stack(){
-//		//构造函数 
-//		stack_top = NULL;
-//		size = 0;
-//	}	
-//	
-//	void size(){
-//		//返回栈的大小（其中元素的个数） 
-//		return this->size;
-//	}
-//		
-//	void pop(){
-//		//删除栈顶元素
-//		auto temp = stack_top->next;
-//		delete stack_top;
-//		stack_top = temp;
-// 	 }
-// 	void push(int x){
-// 		//将新的元素推到栈中 
-// 		stack_top = new chainNode(x, stack_top);
-// 		size++;
-//	 }
-//	int top(){
-//		//返回栈顶元素 
-//		return stack_top->value;
-//	 }
-//};
-
-class caculator{
-	private:
-    stack<int> num; 
-    stack<char> cac;
-    public:
-    void input();
-    void compute();
+struct chainNode{   // 定义了一个链表的节点
+    int value;    // 节点的值
+    chainNode* next;   // 下一个节点的位置
+    chainNode(int value, chainNode* next){  // 节点的构造函数
+        this->value = value;
+        this->next = next;
+    }
 };
 
-void caculator::input(){
-	int n;
-	scanf("%d", &n);
-	for(int i = 0;i < n;i++){
-		int num = 0;
-		scanf("%d", &num);
-		this->num.push(num);
-	}
-	cin.get();
-	for(int i = 0;i < n - 1;i++){
-		char c;
-		cin >> c;
-		cac.push(c);
-	} 
-}
+class linked_list{
+    private:
+        chainNode* chain_head;  // 头结点
+        int chain_size;   // 链表的大小
+    public:
+        linked_list(){  // 节点链表的构造函数
+            chain_head = NULL;
+            chain_size = 0;
+        }
+        int size(){   // 获得他的size
+            return chain_size;
+        }
+        void add_to_head(int x){   // 将元素添加到头的位置
+            chain_head = new chainNode(x, chain_head);
+            chain_size++;
+        }
+        void show(){   // 展示，也就是依次将元素的内容打印出来，就是遍历
+            int ans[N], idx = 0;
+            for(chainNode* i = chain_head;i != NULL;i = i->next){
+                ans[idx ++] = i->value;
+            }
+            for(int i = idx - 1;i >= 0;i--){
+                if(i != idx - 1) printf(" ");
+                printf("%d", ans[i]);
+            }
+        }
+};
 
-void caculator::compute(){
-	int res = 0;
-	while(num.size() >= 1 && !cac.empty()){
-		int num1 = num.top();
-		num.pop();
-		int num2 = num.top();
-		num.pop();
-		char t = cac.top();
-		cac.pop();
-		res = do_compute(num2, num1, t);
-		if(res == ERROR){
-			printf("ERROR: %d/0\n", num2);
-			return;
-		}
-		num.push(res);
-	}
-	printf("%d\n", res);
-}
+int n;
 
 int main(){
-    caculator* c = new caculator();
-    c->input();
-    c->compute();
+    scanf("%d", &n);
+    linked_list* list = new linked_list();  //先创建
+    while(n--){
+        int item;
+        scanf("%d", &item);
+        list->add_to_head(item);  // 添加到链表中
+    }
+    list->show();
+    delete(list);  //后删除
     return 0;
 }
