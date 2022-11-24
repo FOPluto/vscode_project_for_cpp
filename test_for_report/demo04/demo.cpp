@@ -16,7 +16,7 @@ struct node {
 } e[N];
 
 int cnt;
-void dfs_p (int p) {
+void dfs_p (int p) {   // 后序遍历
     if (p == -1) return;
     char ans = e[p].v;
     cout << ans;
@@ -25,7 +25,7 @@ void dfs_p (int p) {
     if (e[p].l == -1 && e[p].r == -1) cnt++;
 }
 
-void dfs_z (int p) {
+void dfs_z (int p) {  // 中序遍历
     if (p == -1) return;
     if (e[p].l != -1) dfs_z(e[p].l);
     char ans = e[p].v;
@@ -33,7 +33,7 @@ void dfs_z (int p) {
     if (e[p].r != -1) dfs_z(e[p].r);
 }
 
-void dfs_h (int p) {
+void dfs_h (int p) {  // 前序遍历
     if (p == -1) return;
     if (e[p].l != -1) dfs_h(e[p].l);
     if (e[p].r != -1) dfs_h(e[p].r); 
@@ -48,19 +48,19 @@ int main() {
     char ro = s[1];
     e[1].v = ro;
 
-    if (s[1] == '#') {
+    if (s[1] == '#') { // 特判一下
         cout << "0" << endl;
         return 0;
     }
     
-    for (int i = 1; i <= N; i++) { 
-        e[i].l = e[i].r = -1;
+    for (int i = 1; i <= N; i++) {  // 初始化所有节点的左孩子和右孩子
+        e[i].l = e[i].r = -1;   // -1代表没有
     }
     
     int flag = 0;
     for (int i = 2; i < (int)s.size(); i++) {
         char ch = s[i];
-        int pos = (i + flag) / 2 ;
+        int pos = (i + flag) / 2;
         if (s[i] == '#') {
             e[i].v = '*';
             if ((flag + i) % 2 == 0) e[pos].l = -1;

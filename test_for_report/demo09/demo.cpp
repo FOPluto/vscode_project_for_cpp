@@ -18,7 +18,8 @@ int qsort(int arr[], int l, int r, int k){
         do i ++; while(arr[i] > mid);
         do j --; while(arr[j] < mid);
         if(i < j) swap(arr[i], arr[j]);
-    }
+}
+
     // 如果当前的中间相对位置是位于k之后的话
     if(j - l + 1 >= k) return qsort(arr, l, j, k); 
     // 如果当前的中间相对位置是位于k之前的话
@@ -29,13 +30,16 @@ int main(){
     cin >> n >> k;
     for(int i = 0;i < n;i++) {
         scanf("%d", &arr[i]);
-    }
-//     sort(arr, arr + n, [](const int &a, const int &b){  //也可以直接进行排序，找第k-1个数
+}
+
+//     sort(arr, arr + n, [](const int &a, const int &b){  
+//也可以直接进行排序，找第k-1个数
 //         return a > b;
 //     });
     
     cout << qsort(arr, 0, n - 1, k);
     
+
 //     cout << arr[k - 1] << endl;
     return 0;
 }

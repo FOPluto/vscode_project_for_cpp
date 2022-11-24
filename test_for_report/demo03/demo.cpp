@@ -15,15 +15,15 @@ int  n;
 int main()
 {
     cin >> n;
-    for(int i = 0;i < n;i++) {
+    for(int i = 0;i < n;i++) { // 先输入
         int num;
         cin >> num;
         if(num % 2) A.push(num);
         else B.push(num);
     }
     
-    while(!A.empty() || !B.empty()){
-        if(!A.empty()) {
+    while(!A.empty() || !B.empty()){ //循环跳出条件是所有的人都处理完
+        if(!A.empty()) {// A弹出两个
             ans.push_back(A.front());
             A.pop();
             if(!A.empty()){
@@ -31,7 +31,7 @@ int main()
                 A.pop();
             }
         }
-        if(!B.empty()) {
+        if(!B.empty()) {// B弹出一个
             ans.push_back(B.front());
             B.pop();
         }
