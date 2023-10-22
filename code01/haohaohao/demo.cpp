@@ -1,72 +1,58 @@
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
-#include <vector>
 
 using namespace std;
 
+int n;
 const int N = 100010;
 
-int n, m;
+typedef pair<int, string> PII;
 
-struct code{
-    vector<int> num;
-    
-    bool operator==(const code& c1){
-        if(c1.num.size() == num.size()){
-            for(int i = 0;i < c1.num.size();i++) if(c1.num[i] != num[i]) return false;
-            return true;
-        }
-        return false;
-    }
-} node[N];
-
-typedef pair<int, int> PII;
-
-PII arr[N];
+unordered_map<string, int> mm;
+PII ans[N];
 int idx;
 
 int main(){
-    scanf("%d%d", &n, &m);
-    
-    for(int i = 0;i < n;i++){
-        code temp;
-        for(int j = 0;j < m;j++){
-            int num; scanf("%d", &num);
-            temp.num.push_back(num);
-        }
-        bool t = false;
-        for(int j = 0;j < idx;j++){
-            if(temp == node[j]) {
-                arr[j].first ++;
-                t = true;
+    scanf("%d", &n);
+    while(n --){
+        string str;
+        getline(cin, str);
+        bool start = false;
+        for(int i = 0;i < str.length();i++){
+            // 不是话题的直接略过
+            if(str[i] == '#' && !start){
+                start = true;
+                string temp = "";
+                // 表示已经开始读取话题
+                while(i < str.length() && str[++ i] != '#'){
+                    char ch = str[i];
+                    if(ch >= 'A' && ch <= 'Z') ch += 32;
+                    // 除了数字和字母,只剩下了符号就直接continue
+                    bool flag = false;
+                    if(ch >= '0' && ch <= '9')
+                        flag = true;
+                    else if(ch >= 'a' && ch <= 'z')
+                        flag = true;
+                    
+                    if(!flag) continue;
+                    // 将元素添加到答案中
+                    temp.append(1, ch);
+                }
+                start = false;
+                mm[temp] ++;
             }
         }
-        if(!t){
-            node[idx] = temp;
-            arr[idx ++].first ++;
-        }
     }
-    for(int i = 0;i < idx;i++) arr[i].second = i;
-    
-    sort(arr, arr + idx, [](PII a1, PII a2){
-        if(a1.first != a2.first) return a1.first > a2.first;
-        int idx_temp = 0;
-        while(node[a1.second].num[idx_temp] == node[a2.second].num[idx_temp]) idx_temp ++;
-        return node[a1.second].num[idx_temp] < node[a2.second].num[idx_temp];
+    for(auto item : mm){
+        ans[idx ++] = {item.second, item.first};
+    }
+    sort(ans, ans + idx, [](PII a1, PII a2){
+        return a1.first > a2.first;
     });
-    
-    printf("%d\n", idx);
-    
-    for(int i = 0;i < idx;i++){
-        if(i) puts("");
-        printf("%d ", arr[i].first);
-        for(int j = 0;j < node[arr[i].second].num.size();j++){
-            if(j) printf(" ");
-            printf("%d", node[arr[i].second].num[j]);
-        }
-    }
+    cout << ans[0].second << endl << ans[0].first << endl;
+        printf("And %d more ...\n", idx - 1);
     return 0;
 }
